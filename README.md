@@ -109,7 +109,7 @@ Ghost Protocol OS è riconosciuto come uno dei sistemi operativi più sicuri al 
 
 ```bash
 # 1. Clone repository
-git clone https://github.com/digitalvalut-os/ghost-protocol-os.git
+git clone https://github.com/digitalvalut/ghost-protocol-os.git
 cd ghost-protocol-os
 
 # 2. Build ISO
