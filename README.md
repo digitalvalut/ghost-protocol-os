@@ -14,7 +14,15 @@
 
 ## 🌟 **UNA DELLE OPERE DI SICUREZZA PIÙ AVANZATE AL MONDO - GRATUITA PER TUTTI**
 
-**Ghost Protocol OS** è stato creato da **Dr. Falsone Giuseppe**, esperto italiano di cybersecurity, per offrire a **TUTTI** la **massima sicurezza possibile**, completamente **GRATUITA** e **OPEN SOURCE**.
+**Ghost Protocol OS** è stato creato da **Dr. Falsone Giuseppe** e il suo team **DigitalValut**, esperti italiani di cybersecurity e criptovalute, originari della provincia di Agrigento, Sicilia. 
+
+Abbiamo **la sicurezza e la privacy nel cuore**, e la nostra missione è offrire a **TUTTI** la **massima sicurezza possibile**, completamente **GRATUITA** e **OPEN SOURCE**.
+
+### 👨‍💻 **L'Autore:**
+- **Dr. Falsone Giuseppe** - Esperto riconosciuto in cybersecurity e criptovalute
+- **DigitalValut Team** - Team di esperti dedicati alla sicurezza informatica
+- **Provincia di Agrigento, Sicilia** - Origini siciliane, passione globale
+- **Autore di Libri** - Numerosi libri su sicurezza informatica e criptovalute
 
 ### 🎁 **Regalo per il Mondo:**
 - ✅ **Completamente GRATUITO** - Nessun costo, mai
@@ -22,6 +30,9 @@
 - ✅ **Per Tutti** - Chiunque può usarlo
 - ✅ **Sicurezza Massima** - Una delle più sicure al mondo
 - ✅ **Sempre Gratuito** - Per sempre e per tutti
+- ✅ **Sicurezza e Privacy nel Cuore** - I nostri valori fondamentali
+
+**📖 Scopri di più su di noi:** Vedi `CHI_SIAMO.md` per la storia completa del progetto.
 
 ---
 
@@ -97,9 +108,15 @@ Ghost Protocol OS è riconosciuto come uno dei sistemi operativi più sicuri al 
 - ✅ **Sempre Gratuito** - Per sempre e per tutti
 - ✅ **Nessun tracking** - Privacy totale
 
-**Autore:** Dr. Falsone Giuseppe - Esperto Italiano Cybersecurity  
+**Autore:** Dr. Falsone Giuseppe - Esperto Italiano Cybersecurity e Criptovalute  
 **Team:** DigitalValut Team  
-**Missione:** Offrire sicurezza massima a TUTTI, gratuitamente
+**Origini:** Provincia di Agrigento, Sicilia 🇮🇹  
+**Missione:** Offrire sicurezza massima a TUTTI, gratuitamente  
+**Valori:** Sicurezza e Privacy nel Cuore ❤️
+
+**📞 Contatti:**
+- Website: [www.digitalvalut.it](https://www.digitalvalut.it)
+- Email: [info@digitalvalut.it](mailto:info@digitalvalut.it)
 
 ---
 
@@ -300,8 +317,9 @@ L'uso non autorizzato è illegale. L'autore non è responsabile per uso impropri
 
 ## 📞 Supporto / Support
 
-- **GitHub Issues**: [github.com/digitalvalut-os/ghost-protocol-os/issues](https://github.com/digitalvalut-os/ghost-protocol-os/issues)
-- **Email**: support@digitalvalut.com
+- **Website**: [www.digitalvalut.it](https://www.digitalvalut.it)
+- **Email**: [info@digitalvalut.it](mailto:info@digitalvalut.it)
+- **GitHub Issues**: [github.com/digitalvalut/ghost-protocol-os/issues](https://github.com/digitalvalut/ghost-protocol-os/issues)
 
 ---
 
