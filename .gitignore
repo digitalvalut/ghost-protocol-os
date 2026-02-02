@@ -1,0 +1,44 @@
+# Live-build artifacts
+binary/
+cache/
+.chroot/
+config/
+*.log
+*.iso
+*.hybrid.iso
+
+# Security - Never commit tokens or secrets
+*.token
+*.key
+*_token*
+*_secret*
+*_password*
+.env
+.env.local
+ghp_*
+ghs_*
+gho_*
+ghu_*
+ghr_*
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+*.egg-info/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+

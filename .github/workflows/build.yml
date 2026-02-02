@@ -1,0 +1,32 @@
+name: Build Ghost Protocol OS
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y live-build live-config live-boot live-tools
+    
+    - name: Build ISO
+      run: |
+        chmod +x build.sh
+        sudo ./build.sh
+    
+    - name: Upload ISO
+      uses: actions/upload-artifact@v3
+      with:
+        name: ghost-protocol-os-iso
+        path: binary/live-image-amd64.hybrid.iso
+
