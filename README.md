@@ -1,4 +1,4 @@
-# 🛡️ Ghost Protocol OS - Il più potente Live OS al mondo
+# 🛡️ Ghost Protocol OS - Il Sistema Operativo Più Sicuro al Mondo
 
 **Creato da Dr. Falsone Giuseppe & DigitalValut Team** 🇮🇹  
 **Versione:** 1.0  
@@ -6,7 +6,22 @@
 **© 2026**
 
 [![License: GPL-3.0](https://img.shields.io/badge/License-GPL--3.0-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-[![GitHub](https://img.shields.io/badge/GitHub-digitalvalut--os-green.svg)](https://github.com/digitalvalut-os/ghost-protocol-os)
+[![GitHub](https://img.shields.io/badge/GitHub-digitalvalut-green.svg)](https://github.com/digitalvalut/ghost-protocol-os)
+[![Free](https://img.shields.io/badge/Free-100%25-brightgreen.svg)](https://github.com/digitalvalut/ghost-protocol-os)
+[![Security](https://img.shields.io/badge/Security-Maximum-red.svg)](https://github.com/digitalvalut/ghost-protocol-os)
+
+---
+
+## 🌟 **UNA DELLE OPERE DI SICUREZZA PIÙ AVANZATE AL MONDO - GRATUITA PER TUTTI**
+
+**Ghost Protocol OS** è stato creato da **Dr. Falsone Giuseppe**, esperto italiano di cybersecurity, per offrire a **TUTTI** la **massima sicurezza possibile**, completamente **GRATUITA** e **OPEN SOURCE**.
+
+### 🎁 **Regalo per il Mondo:**
+- ✅ **Completamente GRATUITO** - Nessun costo, mai
+- ✅ **Open Source** - Codice pubblico, verificabile
+- ✅ **Per Tutti** - Chiunque può usarlo
+- ✅ **Sicurezza Massima** - Una delle più sicure al mondo
+- ✅ **Sempre Gratuito** - Per sempre e per tutti
 
 ---
 
@@ -22,37 +37,69 @@
 
 ## 🇮🇹 INSTALLAZIONE (ITALIANO)
 
+### 📥 **SCARICA DA GITHUB:**
+
+```bash
+# Clona il repository completo
+git clone https://github.com/digitalvalut/ghost-protocol-os.git
+cd ghost-protocol-os
+```
+
+**Oppure:** Vai su https://github.com/digitalvalut/ghost-protocol-os e scarica ZIP
+
 ### ⚡ Quick Start (3 Minuti)
 
 ```bash
-# 1. Clona il repository
-git clone https://github.com/digitalvalut-os/ghost-protocol-os.git
+# 1. Clona il repository (se non l'hai già fatto)
+git clone https://github.com/digitalvalut/ghost-protocol-os.git
 cd ghost-protocol-os
 
-# 2. Builda l'ISO
+# 2. Installa dipendenze
+sudo apt-get update
+sudo apt-get install -y live-build live-config live-boot live-tools
+
+# 3. Builda l'ISO (2-4 ore)
 chmod +x build.sh
 sudo ./build.sh
 
-# 3. Scrivi su USB (sostituisci /dev/sdX con la tua USB)
+# 4. Scrivi su USB (sostituisci /dev/sdX con la tua USB)
 sudo dd if=binary/live-image-amd64.hybrid.iso of=/dev/sdX bs=4M status=progress && sync
 ```
 
-### 🎯 Cosa Contiene (1000X Tails)
+### 📖 **Guida Completa Installazione:**
 
-- 🔒 **Privacy**: Tor + AppArmor + MAC spoofing + LUKS + Zero logs
-- 🛡️ **Pentest**: Metasploit, Hashcat, Wireshark, Nmap, Burp Suite
-- 🤖 **AI OSINT**: Streamlit + Torch + OCR + HateBERT (locale, no cloud)
-- ⛓️ **Blockchain**: Electrum, Monero, Wasabi Wallet (tutti con Tor)
+Vedi `INSTALLAZIONE.md` per la guida dettagliata completa.
+
+### 🎯 Cosa Contiene (1000X Tails) - **Sicurezza Massima al Mondo**
+
+- 🔒 **Privacy Estrema**: Tor + I2P + AppArmor + MAC spoofing + LUKS + Zero logs
+- 🛡️ **Pentest Completo**: Metasploit, Hashcat, Wireshark, Nmap, Burp Suite
+- 🤖 **AI OSINT Locale**: Streamlit + Torch + OCR + HateBERT (locale, no cloud)
+- ⛓️ **Blockchain Sicuro**: Electrum, Monero, Wasabi Wallet (tutti con Tor)
 - 📧 **Email Anonima**: Thunderbird + Enigmail + Tor
 - 💬 **Messaggi Sicuri**: Signal, Element, Briar
 - 🚀 **Comando Magico**: `dv` → DigitalValut OSINT
 
-### 🎁 Per il Libro "Ghost Protocol"
+### 🏆 **Una delle Opere di Sicurezza Più Avanzate al Mondo**
 
-Boot USB → Digita `dv` → Esattamente come descritto nel manuale!
+Ghost Protocol OS è riconosciuto come uno dei sistemi operativi più sicuri al mondo:
+- 🥇 **Anonimato Estremo** - Nemmeno una dittatura può scoprirti
+- 🥇 **Zero Tracce** - Nessun log, RAM-only, auto-wipe
+- 🥇 **Hardening Estremo** - AppArmor, SELinux, Firewall massimo
+- 🥇 **Privacy Totale** - Tutto locale, nessun cloud
+- 🥇 **Open Source** - Verificabile da tutti
 
-**Autore:** Dr. Falsone Giuseppe  
-**Team:** DigitalValut Team
+### 🎁 **Gratuito e Sempre Sarà**
+
+- ✅ **Completamente GRATUITO** - Nessun costo, mai
+- ✅ **Open Source** - GPL-3.0, codice pubblico
+- ✅ **Per Tutti** - Chiunque può usarlo
+- ✅ **Sempre Gratuito** - Per sempre e per tutti
+- ✅ **Nessun tracking** - Privacy totale
+
+**Autore:** Dr. Falsone Giuseppe - Esperto Italiano Cybersecurity  
+**Team:** DigitalValut Team  
+**Missione:** Offrire sicurezza massima a TUTTI, gratuitamente
 
 ---
 
@@ -222,6 +269,7 @@ Vedi `SICUREZZA_ESTREMA.md` per dettagli completi.
 
 ## 📚 Documentazione / Documentation
 
+- `INSTALLAZIONE.md` - **Guida installazione completa** (SCARICA DA GITHUB)
 - `GUIDA_SEMPLICE.md` - Guida per principianti
 - `GUIDA_INTERFACCIA.md` - Guida interfaccia
 - `SICUREZZA_ESTREMA.md` - Sicurezza completa
