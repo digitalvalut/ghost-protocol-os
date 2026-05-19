@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎮 Ghost Clicker - Il Gioco</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 400px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2em;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 0.9em;
+        }
+
+        .score-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        .score-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        .score {
+            font-size: 2.5em;
+            font-weight: bold;
+        }
+
+        .click-button {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: none;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-size: 3em;
+            cursor: pointer;
+            margin: 30px auto;
+            transition: all 0.1s ease;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            user-select: none;
+        }
+
+        .click-button:active {
+            transform: scale(0.95);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .click-button:hover {
+            transform: scale(1.05);
+        }
+
+        .popup {
+            position: fixed;
+            font-size: 1.5em;
+            font-weight: bold;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .upgrades {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        .upgrade-btn {
+            padding: 12px;
+            border: 2px solid #ddd;
+            background: #f5f5f5;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: all 0.3s ease;
+            color: #333;
+        }
+
+        .upgrade-btn:hover:not(:disabled) {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+            transform: translateY(-2px);
+        }
+
+        .upgrade-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .upgrade-title {
+            font-weight: bold;
+            display: block;
+            font-size: 0.95em;
+        }
+
+        .upgrade-cost {
+            font-size: 0.8em;
+            display: block;
+            margin-top: 3px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 20px;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 10px;
+        }
+
+        .stat {
+            font-size: 0.85em;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.75em;
+        }
+
+        .stat-value {
+            font-weight: bold;
+            color: #667eea;
+            font-size: 1.2em;
+            margin-top: 3px;
+        }
+
+        .reset-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: all 0.3s ease;
+        }
+
+        .reset-btn:hover {
+            background: #ff5252;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎮 Ghost Clicker</h1>
+        <p class="subtitle">Clicca il fantasma e diventa ricco!</p>
+
+        <div class="score-box">
+            <div class="score-label">I tuoi Punti</div>
+            <div class="score" id="score">0</div>
+        </div>
+
+        <button class="click-button" id="clickBtn">👻</button>
+
+        <div class="upgrades">
+            <button class="upgrade-btn" id="upgrade1" onclick="buyUpgrade(1)">
+                <span class="upgrade-title">⚡ Click+</span>
+                <span class="upgrade-cost" id="cost1">Costo: 10</span>
+            </button>
+            <button class="upgrade-btn" id="upgrade2" onclick="buyUpgrade(2)">
+                <span class="upgrade-title">🤖 Robot</span>
+                <span class="upgrade-cost" id="cost2">Costo: 50</span>
+            </button>
+            <button class="upgrade-btn" id="upgrade3" onclick="buyUpgrade(3)">
+                <span class="upgrade-title">💰 Moltiplicatore</span>
+                <span class="upgrade-cost" id="cost3">Costo: 200</span>
+            </button>
+            <button class="upgrade-btn" id="upgrade4" onclick="buyUpgrade(4)">
+                <span class="upgrade-title">🌟 Magia</span>
+                <span class="upgrade-cost" id="cost4">Costo: 500</span>
+            </button>
+        </div>
+
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-label">Click per tap</div>
+                <div class="stat-value" id="clickPower">1</div>
+            </div>
+            <div class="stat">
+                <div class="stat-label">Click al secondo</div>
+                <div class="stat-value" id="clickPerSec">0</div>
+            </div>
+            <div class="stat">
+                <div class="stat-label">Moltiplicatore</div>
+                <div class="stat-value" id="multiplier">1x</div>
+            </div>
+            <div class="stat">
+                <div class="stat-label">Upgrade totali</div>
+                <div class="stat-value" id="totalUpgrades">0</div>
+            </div>
+        </div>
+
+        <button class="reset-btn" onclick="resetGame()">🔄 Ricomincia</button>
+    </div>
+
+    <script>
+        let score = 0;
+        let clickPower = 1;
+        let autoClicks = 0;
+        let multiplier = 1;
+        let upgrades = {
+            1: 0,
+            2: 0,
+            3: 0,
+            4: 0
+        };
+
+        const upgradeCosts = {
+            1: 10,
+            2: 50,
+            3: 200,
+            4: 500
+        };
+
+        const upgradeBenefits = {
+            1: () => { clickPower += 1; },
+            2: () => { autoClicks += 1; },
+            3: () => { multiplier += 0.5; },
+            4: () => { autoClicks += 5; multiplier += 1; }
+        };
+
+        function loadGame() {
+            const saved = localStorage.getItem('ghostClickerGame');
+            if (saved) {
+                const data = JSON.parse(saved);
+                score = data.score || 0;
+                clickPower = data.clickPower || 1;
+                autoClicks = data.autoClicks || 0;
+                multiplier = data.multiplier || 1;
+                upgrades = data.upgrades || { 1: 0, 2: 0, 3: 0, 4: 0 };
+            }
+            updateUI();
+        }
+
+        function saveGame() {
+            localStorage.setItem('ghostClickerGame', JSON.stringify({
+                score, clickPower, autoClicks, multiplier, upgrades
+            }));
+        }
+
+        function updateUI() {
+            document.getElementById('score').textContent = Math.floor(score);
+            document.getElementById('clickPower').textContent = clickPower;
+            document.getElementById('clickPerSec').textContent = (autoClicks * multiplier).toFixed(1);
+            document.getElementById('multiplier').textContent = multiplier.toFixed(1) + 'x';
+            document.getElementById('totalUpgrades').textContent = Object.values(upgrades).reduce((a, b) => a + b, 0);
+
+            for (let i = 1; i <= 4; i++) {
+                const cost = upgradeCosts[i];
+                const btn = document.getElementById(`upgrade${i}`);
+                const costEl = document.getElementById(`cost${i}`);
+                btn.disabled = score < cost;
+                costEl.textContent = `Costo: ${cost}`;
+            }
+        }
+
+        function buyUpgrade(id) {
+            const cost = upgradeCosts[id];
+            if (score >= cost) {
+                score -= cost;
+                upgrades[id]++;
+                upgradeBenefits[id]();
+                upgradeCosts[id] = Math.floor(upgradeCosts[id] * 1.15);
+                updateUI();
+                saveGame();
+                createPopup('+' + cost, event.target);
+            }
+        }
+
+        function click() {
+            const gain = clickPower * multiplier;
+            score += gain;
+            updateUI();
+            saveGame();
+            createPopup('+' + Math.floor(gain), event.target);
+        }
+
+        function createPopup(text, element) {
+            const popup = document.createElement('div');
+            popup.className = 'popup';
+            popup.textContent = text;
+            popup.style.left = (event.clientX - 20) + 'px';
+            popup.style.top = (event.clientY - 30) + 'px';
+            popup.style.color = '#667eea';
+            document.body.appendChild(popup);
+
+            let opacity = 1;
+            let y = event.clientY;
+            const interval = setInterval(() => {
+                y -= 3;
+                opacity -= 0.05;
+                popup.style.transform = `translateY(${y - event.clientY}px)`;
+                popup.style.opacity = opacity;
+                if (opacity <= 0) {
+                    clearInterval(interval);
+                    popup.remove();
+                }
+            }, 30);
+        }
+
+        function resetGame() {
+            if (confirm('Sei sicuro? Perderai tutto!')) {
+                score = 0;
+                clickPower = 1;
+                autoClicks = 0;
+                multiplier = 1;
+                upgrades = { 1: 0, 2: 0, 3: 0, 4: 0 };
+                Object.keys(upgradeCosts).forEach(k => {
+                    upgradeCosts[k] = [10, 50, 200, 500][k - 1];
+                });
+                updateUI();
+                saveGame();
+            }
+        }
+
+        // Auto-click every 100ms
+        setInterval(() => {
+            if (autoClicks > 0) {
+                const gain = autoClicks * multiplier;
+                score += gain / 10;
+                updateUI();
+            }
+        }, 100);
+
+        // Save game every 5 seconds
+        setInterval(saveGame, 5000);
+
+        // Click button listener
+        document.getElementById('clickBtn').addEventListener('click', click);
+
+        // Load and start
+        loadGame();
+    </script>
+</body>
+</html>
