@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🗺️ Digitalvalut - Parent Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .header {
+            background: white;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin: 0;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        input[type="text"] {
+            padding: 10px 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: #f5f5f5;
+            color: #333;
+            border: 2px solid #ddd;
+        }
+
+        .btn-secondary:hover {
+            background: #ddd;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        #map {
+            width: 100%;
+            height: calc(100vh - 120px);
+        }
+
+        .info-panel {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            max-width: 300px;
+            z-index: 50;
+            font-size: 0.95em;
+        }
+
+        .info-item {
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .info-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .info-label {
+            font-weight: bold;
+            color: #667eea;
+            font-size: 0.85em;
+            text-transform: uppercase;
+            margin-bottom: 3px;
+        }
+
+        .info-value {
+            color: #333;
+            font-size: 1em;
+        }
+
+        .status {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+
+        .status.online {
+            background: #4caf50;
+            animation: blink 1.5s infinite;
+        }
+
+        .status.offline {
+            background: #f44336;
+        }
+
+        @keyframes blink {
+            0%, 50%, 100% { opacity: 1; }
+            25%, 75% { opacity: 0.5; }
+        }
+
+        .message {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            text-align: center;
+            font-weight: bold;
+            display: none;
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 101;
+            max-width: 300px;
+        }
+
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            display: block;
+        }
+
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            display: block;
+        }
+
+        .message.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            display: block;
+        }
+
+        .accuracy {
+            font-size: 0.8em;
+            color: #999;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .controls {
+                justify-content: stretch;
+            }
+
+            .input-group {
+                flex-direction: column;
+            }
+
+            input[type="text"], .btn {
+                width: 100%;
+            }
+
+            .info-panel {
+                display: none;
+            }
+
+            h1 {
+                font-size: 1.5em;
+            }
+
+            #map {
+                height: calc(100vh - 200px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="message" id="message"></div>
+
+    <div class="header">
+        <div class="header-content">
+            <h1>🗺️ Digitalvalut - Genitore</h1>
+            <div class="controls">
+                <div class="input-group">
+                    <input type="text" id="familyCode" placeholder="Codice Famiglia" maxlength="20">
+                    <button class="btn btn-primary" onclick="connectFamily()">🔗 Connetti</button>
+                    <button class="btn btn-secondary" onclick="refreshMap()">🔄 Aggiorna</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="map"></div>
+
+    <div class="info-panel" id="infoPanel">
+        <div class="info-item">
+            <div class="info-label">Stato</div>
+            <div class="info-value">
+                <span class="status offline" id="statusDot"></span>
+                <span id="statusText">Disconnesso</span>
+            </div>
+        </div>
+        <div class="info-item">
+            <div class="info-label">Posizione</div>
+            <div class="info-value" id="locationInfo">-</div>
+        </div>
+        <div class="info-item">
+            <div class="info-label">Accuratezza</div>
+            <div class="info-value accuracy" id="accuracyInfo">-</div>
+        </div>
+        <div class="info-item">
+            <div class="info-label">Ultimo Aggiornamento</div>
+            <div class="info-value" id="timeInfo">-</div>
+        </div>
+    </div>
+
+    <script>
+        const BIN_MASTER_KEY = 'b5acc8b24589c44cb5be';
+        let map = null;
+        let marker = null;
+        let circle = null;
+        let currentData = null;
+        let autoRefreshInterval = null;
+
+        // Inizializza la mappa
+        function initMap() {
+            map = L.map('map').setView([41.8719, 12.5674], 12); // Roma di default
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors',
+                maxZoom: 19
+            }).addTo(map);
+        }
+
+        function showMessage(text, type) {
+            const msg = document.getElementById('message');
+            msg.textContent = text;
+            msg.className = `message ${type}`;
+            setTimeout(() => {
+                msg.className = 'message';
+            }, 3000);
+        }
+
+        function updateStatus(isOnline) {
+            const dot = document.getElementById('statusDot');
+            const text = document.getElementById('statusText');
+
+            if (isOnline) {
+                dot.className = 'status online';
+                text.textContent = 'Online';
+            } else {
+                dot.className = 'status offline';
+                text.textContent = 'Offline';
+            }
+        }
+
+        async function fetchChildLocation() {
+            const familyCode = document.getElementById('familyCode').value.trim().toUpperCase();
+
+            if (!familyCode) {
+                showMessage('❌ Inserisci il codice famiglia', 'error');
+                return;
+            }
+
+            try {
+                // Crea un binId basato sul codice famiglia
+                const binId = btoa(familyCode).substring(0, 20);
+
+                const response = await fetch(`https://api.jsonbin.io/v3/b/${binId}/latest`, {
+                    headers: {
+                        'X-Master-Key': BIN_MASTER_KEY
+                    }
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    const data = result.record;
+
+                    if (data && data.child) {
+                        currentData = data.child;
+                        updateMap(currentData.latitude, currentData.longitude);
+                        updateInfoPanel(currentData);
+                        updateStatus(true);
+
+                        const timeAgo = getTimeAgo(new Date(currentData.timestamp));
+                        showMessage(`✅ Posizione aggiornata - ${timeAgo}`, 'success');
+                    } else {
+                        showMessage('❌ Codice famiglia non valido', 'error');
+                        updateStatus(false);
+                    }
+                } else if (response.status === 404) {
+                    showMessage('❌ Il figlio non ha ancora inviato la posizione', 'info');
+                    updateStatus(false);
+                } else {
+                    showMessage('❌ Errore nel caricamento', 'error');
+                }
+            } catch (error) {
+                showMessage('❌ Errore: ' + error.message, 'error');
+                updateStatus(false);
+            }
+        }
+
+        function updateMap(latitude, longitude) {
+            const latLng = L.latLng(latitude, longitude);
+
+            // Rimuovi marker e cerchio vecchi
+            if (marker) map.removeLayer(marker);
+            if (circle) map.removeLayer(circle);
+
+            // Aggiungi nuovo marker
+            marker = L.marker(latLng, {
+                icon: L.icon({
+                    iconUrl: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj48cGF0aCBkPSJNMTYgMmM3LjczIDAgMTQgNi4yNyAxNCA0cy02LjI3IDEwLTE0IDEwLTEwLTYuMjctMTAtMTAgNi4yNy0xNiAxNC0xNnoiIGZpbGw9IiM2NjdlZWEiLz48L3N2Zz4=',
+                    iconSize: [32, 32],
+                    iconAnchor: [16, 32],
+                    popupAnchor: [0, -32]
+                })
+            }).addTo(map).bindPopup('📍 Figlio qui');
+
+            // Aggiungi cerchio di accuratezza
+            circle = L.circle(latLng, {
+                radius: 50,
+                color: '#667eea',
+                fillColor: '#667eea',
+                fillOpacity: 0.1,
+                weight: 2
+            }).addTo(map);
+
+            // Centra la mappa
+            map.setView(latLng, 16);
+        }
+
+        function updateInfoPanel(data) {
+            const timestamp = new Date(data.timestamp);
+            const timeAgo = getTimeAgo(timestamp);
+            const time = timestamp.toLocaleTimeString('it-IT');
+
+            document.getElementById('locationInfo').textContent =
+                `${data.latitude.toFixed(4)}, ${data.longitude.toFixed(4)}`;
+            document.getElementById('accuracyInfo').textContent =
+                `${data.accuracy || 'Alta'}`;
+            document.getElementById('timeInfo').textContent =
+                `${time} (${timeAgo})`;
+        }
+
+        function getTimeAgo(date) {
+            const now = new Date();
+            const diff = Math.floor((now - date) / 1000);
+
+            if (diff < 60) return 'proprio adesso';
+            if (diff < 3600) return Math.floor(diff / 60) + ' min fa';
+            if (diff < 86400) return Math.floor(diff / 3600) + ' ore fa';
+            return Math.floor(diff / 86400) + ' giorni fa';
+        }
+
+        function connectFamily() {
+            const code = document.getElementById('familyCode').value.trim();
+            if (!code) {
+                showMessage('❌ Inserisci il codice famiglia', 'error');
+                return;
+            }
+
+            // Salva il codice
+            localStorage.setItem('familyCode', code);
+
+            // Carica subito
+            fetchChildLocation();
+
+            // Poi aggiorna ogni 5 secondi
+            if (autoRefreshInterval) clearInterval(autoRefreshInterval);
+            autoRefreshInterval = setInterval(fetchChildLocation, 5000);
+
+            showMessage('🔗 Connesso! Aggiornamento ogni 5 secondi...', 'info');
+        }
+
+        function refreshMap() {
+            fetchChildLocation();
+        }
+
+        // Carica il codice salvato
+        window.addEventListener('load', () => {
+            initMap();
+            const saved = localStorage.getItem('familyCode');
+            if (saved) {
+                document.getElementById('familyCode').value = saved;
+                connectFamily();
+            }
+        });
+
+        // Carica quando l'app ritorna in primo piano
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden) {
+                refreshMap();
+            }
+        });
+    </script>
+</body>
+</html>
